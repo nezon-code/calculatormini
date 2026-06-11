@@ -43,10 +43,7 @@ public class GraphView extends View {
     }
     public void updateGraph()
     {
-        for (GraphFunction f : functions)
-        {
-
-        }
+        invalidate();
     }
     public float getOffSetX()
     {
@@ -57,10 +54,28 @@ public class GraphView extends View {
         return offsetY;
     }
 
+    public void addFunction(GraphFunction f)
+    {
+        functions.add(f);
+    }
+
     @Override
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-        canvas.drawLine(100, 100, 500, 500, graphP);
+
+        for (GraphFunction f : functions)
+        {
+            float prevX = 0;
+            float prevY = 0;
+            for (float i = 0; i < 400; i+=5)
+            {
+                double g = f.evaluate(new String[]{"x"}, new double[]{i});
+                canvas.drawLine(prevX, prevY, i, (float)g, graphP);
+                prevX = i;
+                prevY = (float)g;
+            }
+        }
+
     }
 }

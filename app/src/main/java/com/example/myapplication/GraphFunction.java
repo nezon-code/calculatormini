@@ -33,8 +33,6 @@ public class GraphFunction {
         {
             e.addArguments(new Argument(vars[i], values[i]));
         }
-        System.out.println(e);
-        System.out.println(e.calculate() + " rawr uwu :3 3;3");
         return e.calculate();
     }
 

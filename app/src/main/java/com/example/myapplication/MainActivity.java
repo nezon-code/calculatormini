@@ -1,14 +1,19 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,22 +28,34 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        LinearLayout thev = findViewById(R.id.thev);
+        ListView re = findViewById(R.id.list);
+        EditText input = findViewById(R.id.input);
+        Button addButton = findViewById(R.id.button);
+        ArrayList<String> data = new ArrayList<String>();
 
         GraphFunction f = new GraphFunction("x^2+2");
         f.evaluate(new String[]{"x"}, new double[]{10});
 
         GraphView viewer = new GraphView(this);
+        thev.addView(viewer);
 
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
+        re.setAdapter(arrayAdapter);
 
-        TextView text = new TextView(this);
-        text.setText("Graph");
-
-        layout.addView(text);
-        layout.addView(viewer);
-
-        setContentView(layout);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String inpu = input.getText().toString().trim();
+                if (!inpu.isEmpty()) {
+                    data.add(inpu);
+                    viewer.addFunction(new GraphFunction(inpu));
+                    arrayAdapter.notifyDataSetChanged();
+                    input.setText("");
+                    viewer.updateGraph();
+                }
+            }
+        });
 
         System.out.println("aawwawawwawawaS");
     }
