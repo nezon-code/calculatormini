@@ -16,6 +16,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
+import org.mariuszgromada.math.mxparser.Argument;
+import org.mariuszgromada.math.mxparser.Expression;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Button button2 = findViewById(R.id.button2);
         Button button3 = findViewById(R.id.button3);
         ImageButton button4 = findViewById(R.id.button4);
-        ArrayList<String> data = new ArrayList<String>();
+        ArrayList<String> data = new ArrayList<>();
 
         GraphFunction f = new GraphFunction("x^2+2");
         f.evaluate(new String[]{"x"}, new double[]{10});
@@ -48,49 +50,46 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
         functionlist.setAdapter(arrayAdapter);
 
-        button1.setOnClickListener(new View.OnClickListener()
+        button1.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v) {
-                String inpu = input.getText().toString().trim();
-                if (!inpu.isEmpty()) {
-                    data.add(inpu);
-                    viewer.addFunction(new GraphFunction(inpu));
-                    arrayAdapter.notifyDataSetChanged();
-                    input.setText("");
-
-                }
-                else
-                {
-                    arrayAdapter.notifyDataSetChanged();
-                    input.setText("Please enter a function.");
-                }
-            }
-        });
-
-        button2.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                viewer.updateGraph();
-                button1.setVisibility(View.GONE);
-                button2.setVisibility(View.GONE);
-                button3.setVisibility(View.GONE);
-                button4.setVisibility(View.GONE);
-                input.setVisibility(View.GONE);
-                functionlist.setVisibility(View.GONE);
-            }
-        });
-
-        button3.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                data.clear();
+            String inpu = input.getText().toString().trim();
+            if (!inpu.isEmpty()) {
+                data.add(inpu);
+                viewer.addFunction(new GraphFunction(inpu));
                 arrayAdapter.notifyDataSetChanged();
+                input.setText("");
             }
+            else
+            {
+                arrayAdapter.notifyDataSetChanged();
+                input.setText("Enter Function Here.");
+            }
+        });
+
+        button2.setOnClickListener(v ->
+        {
+            viewer.updateGraph();
+            button1.setVisibility(View.GONE);
+            button2.setVisibility(View.GONE);
+            button3.setVisibility(View.GONE);
+            button4.setVisibility(View.GONE);
+            input.setVisibility(View.GONE);
+            functionlist.setVisibility(View.GONE);
+        });
+
+        input.setOnClickListener(v ->
+        {
+            if (input.getText().toString().equals("Enter Function Here"))
+            {
+                input.setText("");
+            }
+        });
+
+
+        button3.setOnClickListener(v ->
+        {
+            data.clear();
+            arrayAdapter.notifyDataSetChanged();
         });
 
         button4.setOnClickListener(v ->

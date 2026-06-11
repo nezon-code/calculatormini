@@ -1,10 +1,13 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
+
+
 import java.util.ArrayList;
 
 
@@ -61,17 +64,16 @@ public class GraphView extends View {
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-
         for (GraphFunction f : functions)
         {
             if (f.getExpression().contains("x"))
             {
-                float prevX = 0;
-                float prevY = 0;
-                for (float i = 0; i < 400; i += 5)
+                float prevX = 200;
+                float prevY = 100;
+                for (float i = 0; i < 400; i += 1)
                 {
                     double g = f.evaluate(new String[]{"x"}, new double[]{i});
-                    canvas.drawLine(prevX, prevY, i, (float) g, graphP);
+                    canvas.drawLine(prevX, prevY, prevX + i, prevY + (float) g, graphP);
                     prevX = i;
                     prevY = (float) g;
                 }
