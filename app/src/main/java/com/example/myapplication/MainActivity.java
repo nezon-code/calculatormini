@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +22,24 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        GraphFunction f = new GraphFunction("x^2+2");
+        f.evaluate(new String[]{"x"}, new double[]{10});
+
+        GraphView viewer = new GraphView(this);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        TextView text = new TextView(this);
+        text.setText("Graph");
+
+        layout.addView(text);
+        layout.addView(viewer);
+
+        setContentView(layout);
+
+        System.out.println("aawwawawwawawaS");
     }
 }
