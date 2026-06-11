@@ -12,8 +12,6 @@ public class GraphView extends View {
     private float zoom;
     private float offsetX;
     private float offsetY;
-    private Paint axisP;
-    private Paint gridP;
     private Paint graphP;
     ArrayList<GraphFunction> functions = new ArrayList<GraphFunction>();
     public GraphView(Context context, float z, float X, float Y)
@@ -66,14 +64,17 @@ public class GraphView extends View {
 
         for (GraphFunction f : functions)
         {
-            float prevX = 0;
-            float prevY = 0;
-            for (float i = 0; i < 400; i+=5)
+            if (f.getExpression().contains("x"))
             {
-                double g = f.evaluate(new String[]{"x"}, new double[]{i});
-                canvas.drawLine(prevX, prevY, i, (float)g, graphP);
-                prevX = i;
-                prevY = (float)g;
+                float prevX = 0;
+                float prevY = 0;
+                for (float i = 0; i < 400; i += 5)
+                {
+                    double g = f.evaluate(new String[]{"x"}, new double[]{i});
+                    canvas.drawLine(prevX, prevY, i, (float) g, graphP);
+                    prevX = i;
+                    prevY = (float) g;
+                }
             }
         }
 

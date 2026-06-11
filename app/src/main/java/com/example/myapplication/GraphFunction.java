@@ -1,8 +1,6 @@
 package com.example.myapplication;
 import org.mariuszgromada.math.mxparser.Argument;
 import org.mariuszgromada.math.mxparser.Expression;
-
-import java.util.HashMap;
 public class GraphFunction {
     private String exp;
     private int color;
